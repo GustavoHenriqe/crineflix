@@ -1,15 +1,13 @@
 import { Link } from "react-router-dom"
-import Header from "./Header"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 
 function Home(props) {
-    const [ films_list, setFilms_list ] = useState([])
+    const [films_list, setFilms_list] = useState([])
 
     useEffect(() => {
         const request_api_films = axios.get("https://mock-api.driven.com.br/api/v8/cineflex/movies")
-
         request_api_films.then(
             request => {
                 setFilms_list(request.data)
@@ -18,29 +16,24 @@ function Home(props) {
         request_api_films.catch(
             err => console.log(err.message)
         )
-
     }, [])
 
     return (
         <>
-        <Header />
-        <StyledSection>
-            <h1>Selecione o filme</h1>
-            <div className="films-home">  
-                { films_list.map(e => {
-                    return (
-                        <StyleButton 
-                        key={e.id}
-                        onClick={props.objectFilm}
-                        id={e.id}>
-                            <Link to={"/session/" + e.id}>
-                                <img src={e.posterURL}></img>
-                            </Link>
-                        </StyleButton>
-                    )
-                })}
-            </div>
-        </StyledSection>
+            <StyledSection>
+                <h2>Selecione o filme</h2>
+                <div className="films-home">
+                    {films_list.map(e => {
+                        return (
+                            <StyleButton onClick={props.sessionButton} key={e.id}>
+                                <Link to={"/session/" + e.id}>
+                                    <img id={e.id} src={e.posterURL}></img>
+                                </Link>
+                            </StyleButton>
+                        )
+                    })}
+                </div>
+            </StyledSection>
         </>
     )
 }
@@ -54,7 +47,7 @@ const StyledSection = styled.section`
     font-weight: 400;
     font-size: 24px;
 
-    h1 {
+    h2 {
         margin-top: 55px;
         margin-bottom: 55px;
     }

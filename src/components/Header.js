@@ -9,7 +9,6 @@ function Header() {
             </header>
         </HeaderStyled>
     )
-
 }
 
 const HeaderStyled = styled.header`
